@@ -10,7 +10,7 @@ Bright Minds Study Group wants students to have accounts. You'll finish the API'
 - `users.js`: the students, kept in MongoDB's `users` collection. `createUsersRepository(db)` gives back `addUser`, `findUserByEmail` and `findUserById`, and `createUserIndexes(db)` makes the unique index on `email`. Ready to use.
 - `server.js`: connects to MongoDB once, hands the database to `createApp(db)` and starts the API at `http://localhost:3100`. Ready to use.
 - `.env.example`: the two settings the server reads, `MONGODB_URI` and `JWT_SECRET`. Copy it to `.env` (below).
-- `study-group.http`: the requests to try, for VS Code's REST Client extension. Ready to use.
+- `study-group.insomnia.json`: the requests to try, as an Insomnia collection. Ready to use.
 - `app.test.js`: tests that send requests to your app with Supertest and check each answer. You don't need to change this file.
 - `throwaway-database.js`: starts the throwaway MongoDB the tests hand to `createApp(db)`. You don't need to read or change it.
 - `package.json` and `package-lock.json`: the project's settings, its scripts (`start`, `dev` and `test`) and its packages at exact versions: Express, bcryptjs, jsonwebtoken and the MongoDB driver, with Supertest and mongodb-memory-server for the tests. Ready to use.
@@ -41,7 +41,7 @@ MongoDB must be running on your computer (the course's setup lesson installs it)
 npm start
 ```
 
-The terminal says `The study group's API is listening on http://localhost:3100` and keeps running. Open `study-group.http` and click **Send Request** above each request, from the top down: the `/me` request uses the token from the sign-in above it. Stop the server with **Ctrl+C**.
+The terminal says `The study group's API is listening on http://localhost:3100` and keeps running. In Insomnia, click **Import** in your `Node.js in Depth` project, choose `study-group.insomnia.json`, and send each request, from the top down: the `/me` request uses the token from the sign-in above it. Stop the server with **Ctrl+C**.
 
 `npm run dev` starts it with `node --watch`, so it restarts each time you save `app.js`.
 

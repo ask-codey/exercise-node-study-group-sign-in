@@ -1,0 +1,191 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-11-22T00:00:00Z",
+  "__export_source": "ask-codey:exercise",
+  "resources": [
+    {
+      "_id": "wrk_study_group",
+      "_type": "workspace",
+      "parentId": null,
+      "name": "Study Group Sign-In",
+      "description": "Exercise: Study Group Sign-In. Start the server first, then send the requests in order; each one's description says what to expect. If your server runs at another address, change base_url in the Base Environment.",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_study_group_base",
+      "_type": "environment",
+      "parentId": "wrk_study_group",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3100"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 0
+    },
+    {
+      "_id": "jar_study_group",
+      "_type": "cookie_jar",
+      "parentId": "wrk_study_group",
+      "name": "Default Jar",
+      "cookies": []
+    },
+    {
+      "_id": "req_study_group_100",
+      "_type": "request",
+      "parentId": "wrk_study_group",
+      "name": "1. Sign up as Maya",
+      "description": "Expect: 201 (send it a second time for 409)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/sign-up",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"name\": \"Maya\", \"email\": \"maya@example.com\", \"password\": \"maya-example-password\" }"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {},
+      "metaSortKey": 100,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_study_group_110",
+      "_type": "request",
+      "parentId": "wrk_study_group",
+      "name": "2. A password that's too short",
+      "description": "Expect: 400.",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/sign-up",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"name\": \"Leo\", \"email\": \"leo@example.com\", \"password\": \"study12\" }"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {},
+      "metaSortKey": 110,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_study_group_120",
+      "_type": "request",
+      "parentId": "wrk_study_group",
+      "name": "3. Sign in as Maya",
+      "description": "Expect: 200 with a token (the requests below use it, so send this one first)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/sign-in",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"email\": \"maya@example.com\", \"password\": \"maya-example-password\" }"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {},
+      "metaSortKey": 120,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_study_group_130",
+      "_type": "request",
+      "parentId": "wrk_study_group",
+      "name": "4. The wrong password",
+      "description": "Expect: 401.",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/sign-in",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"email\": \"maya@example.com\", \"password\": \"Maya-example-password\" }"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {},
+      "metaSortKey": 130,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_study_group_140",
+      "_type": "request",
+      "parentId": "wrk_study_group",
+      "name": "5. Who am I, with Maya's token from the sign-in above",
+      "description": "Expect: 200.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/me",
+      "body": {},
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_study_group_120', 'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+        }
+      ],
+      "parameters": [],
+      "authentication": {},
+      "metaSortKey": 140,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_study_group_150",
+      "_type": "request",
+      "parentId": "wrk_study_group",
+      "name": "6. Who am I, with no token",
+      "description": "Expect: 401.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/me",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {},
+      "metaSortKey": 150,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    }
+  ]
+}
